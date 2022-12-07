@@ -54,6 +54,9 @@ X_train_scaled = my_scaler.transform(X_train)
 
 X_test_scaled = my_scaler.transform(X_test)
 
+my_scaler.fit(X)
+X_scaled = my_scaler.transform(X)
+
 st.sidebar.title("Job Placement Prediction Model")
 option = st.sidebar.radio(
     "What would you like to do",
@@ -118,22 +121,50 @@ elif option == "Dataset & EDA":
     
     
 elif option =="Models and Accuracies":
-    imag = Image.open("images.jpg")
+    imag = Image.open("E:\MSU\Classes\CMSE_830\images.jpg")
     st.title("Lets check the accuracies of different Classifiers")
     st.image(imag,caption='image source from bitesizebio.com') 
     model_c = st.radio("Select a classifier to see its accuracy",('KNN','Decision Tree','SVM','RandomForest'))
     if model_c == 'KNN':
         m1=KNeighborsClassifier(n_neighbors=5,algorithm='brute',weights='uniform').fit(X_train, y_train)
         st.success(m1.score(X_test,y_test))
+        clff1 = make_pipeline(StandardScaler(), m1)
+        moff1 = clff1.fit(X_train_scaled, y_train)
+        cm1 = confusion_matrix(y,moff1.predict(X_scaled))
+        fig0 = plt.figure(figsize=(10,5))
+        sns.heatmap(cm1,annot=True,fmt='g')
+        st.write("## Confusion Matrix")
+        st.write(fig0)
     elif model_c == 'Decision Tree':
         m2=DecisionTreeClassifier(criterion='gini',max_depth=5,splitter='best',random_state = 50).fit(X_train, y_train)
         st.success(m2.score(X_test,y_test))
+        clff2 = make_pipeline(StandardScaler(), m2)
+        moff2 = clff2.fit(X_train_scaled, y_train)
+        cm2 = confusion_matrix(y,moff2.predict(X_scaled))
+        fig0 = plt.figure(figsize=(10,5))
+        sns.heatmap(cm2,annot=True,fmt='g')
+        st.write("## Confusion Matrix")
+        st.write(fig0)
     elif model_c == 'SVM':
         m3=svm.SVC(gamma='auto',C=1,kernel ='linear').fit(X_train, y_train)
         st.success(m3.score(X_test,y_test))
+        clff1 = make_pipeline(StandardScaler(), m3)
+        moff1 = clff1.fit(X_train_scaled, y_train)
+        cm1 = confusion_matrix(y,moff1.predict(X_scaled))
+        fig0 = plt.figure(figsize=(10,5))
+        sns.heatmap(cm1,annot=True,fmt='g')
+        st.write("## Confusion Matrix")
+        st.write(fig0)
     elif model_c == 'RandomForest':
         m4=RandomForestClassifier(max_depth=5, n_estimators=15, max_features=1,random_state = 1).fit(X_train, y_train)
         st.success(m4.score(X_test,y_test))
+        clff1 = make_pipeline(StandardScaler(), m4)
+        moff1 = clff1.fit(X_train_scaled, y_train)
+        cm1 = confusion_matrix(y,moff1.predict(X_scaled))
+        fig0 = plt.figure(figsize=(10,5))
+        sns.heatmap(cm1,annot=True,fmt='g')
+        st.write("## Confusion Matrix")
+        st.write(fig0)
 
 elif option =='Hyperparameter Tuning':
     imag = Image.open("manufacture.png")
