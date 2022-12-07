@@ -18,7 +18,7 @@ import streamlit as st
 from PIL import Image
         
 
-data =pd.read_csv(r"C:\Users\Koushik Sai\Downloads\CMSE 830\Datasets\Campus placement\Placement_Data_Full_Class.csv")
+data =pd.read_csv("Placement_Data_Full_Class.csv")
 
 X1 = data.drop(["sl_no","status","salary","etest_p","specialisation","mba_p","gender"],axis=1)
 y = data["status"]
@@ -93,7 +93,7 @@ if option == 'Prediction Model':
 
 elif option == "Dataset & EDA":
     st.title("Job Placement Prediction")
-    image = Image.open("E:\MSU\Classes\CMSE_830\CMSEProjects\successful-placements-min.png")
+    image = Image.open("successful-placements-min.png")
     st.image(image,caption='image source from firefish blog') 
     st.header("Job Placement Dataset")
     st.dataframe(data)
@@ -118,7 +118,7 @@ elif option == "Dataset & EDA":
     
     
 elif option =="Models and Accuracies":
-    imag = Image.open("E:\MSU\Classes\CMSE_830\images.jpg")
+    imag = Image.open("images.jpg")
     st.title("Lets check the accuracies of different Classifiers")
     st.image(imag,caption='image source from bitesizebio.com') 
     model_c = st.radio("Select a classifier to see its accuracy",('KNN','Decision Tree','SVM','RandomForest'))
@@ -136,7 +136,7 @@ elif option =="Models and Accuracies":
         st.success(m4.score(X_test,y_test))
 
 elif option =='Hyperparameter Tuning':
-    imag = Image.open("E:\MSU\Classes\CMSE_830\manufacture.png")
+    imag = Image.open("manufacture.png")
     st.title("Hyper Parameter Tuning")
     st.image(imag,caption='image source from veryicon.com') 
     model_c = st.selectbox("Select a classifier to which are its best parameters",('KNN','Decision Tree','SVM','RandomForest'))
